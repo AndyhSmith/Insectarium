@@ -14,17 +14,27 @@ const width = 32;
 var objects = [];
 var zones = [];
 var selected = [];
+var ripples = [];
 
 //Colors
 var activeButtonColor = "lightgreen";
 var normalButtonColor = "white";
 var selectedColor = "rgb(255,255,0,.5)";
+var trailAlpha = .8; // 0.0 (no trails) … 1.0 (instant fade)
+
 
 //Start
 let img = new Image();
 img.src = "bugs_orig.png";
 var c = document.getElementById("myCanvas");
 var ctx = c.getContext("2d");
+
+// disable filtering so sprites stay sharp
+ctx.imageSmoothingEnabled = false;
+// older engines (harmless if no-op)
+ctx.mozImageSmoothingEnabled = false;
+ctx.webkitImageSmoothingEnabled = false;
+
 ctx.canvas.width = w;
 ctx.canvas.height = h;
 createZone(w / 2, h / 5, w / 10);
@@ -163,6 +173,7 @@ function mouseClick(event) {
             objects[o].yVelocity = Math.sin(objects[o].angle) * objects[o].velocity;
         }
     }
+    ripples.push({ x, y, r: 0, life: 1 });
 }
 
 //---------------------------------------------------------------------------------------
@@ -284,7 +295,8 @@ function updateObjects() {
 // V I S U A L
 
 function updateGraphics() {
-    ctx.clearRect(0, 0, w, h);
+    ctx.fillStyle = "rgba(255, 255, 255, " + trailAlpha + ")";
+    ctx.fillRect(0, 0, w, h);
 
     //Draw Objects
     for (o in objects) {
@@ -358,6 +370,55 @@ function updateGraphics() {
 function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
 }
+
+// b = toggle bugs, z = toggle zones, c = clear bugs, x = clear zones
+document.addEventListener("keydown", (e) => {
+    if (e.target && (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA")) return;
+    if (e.key === "b" || e.key === "B") toggleBugs();
+    if (e.key === "z" || e.key === "Z") toggleZones();
+    if (e.key === "r" || e.key === "R") clearBugs();
+    if (e.key === "c" || e.key === "C") clearZones();
+    if (e.key === "s" || e.key === "S") toggleSettings();
+});
+
+//---------------------------------------------------------------------------------------
+// S E T T I N G S   P A N E L
+var settingsOpen = false;
+
+function toggleSettings() {
+  settingsOpen = !settingsOpen;
+  document.getElementById("settings-panel").hidden = !settingsOpen;
+  document.getElementById("user-action-5").style.backgroundColor =
+    settingsOpen ? activeButtonColor : normalButtonColor;
+}
+
+function closeSettings() {
+  settingsOpen = false;
+  document.getElementById("settings-panel").hidden = true;
+  document.getElementById("user-action-5").style.backgroundColor = normalButtonColor;
+}
+
+// slider: 0..100 -> trailAlpha 0.05..0.60 
+(function initSettings() {
+  const slider = document.getElementById("trail-slider");
+  const valueEl = document.getElementById("trail-value");
+
+  // ensure slider uses 0–1 range
+  slider.min = 0;
+  slider.max = 1;
+  slider.step = 0.01;
+  slider.value = trailAlpha;
+  valueEl.textContent = trailAlpha.toFixed(2);
+
+  // live update trail alpha
+  slider.addEventListener("input", function () {
+    trailAlpha = parseFloat(this.value);
+    valueEl.textContent = trailAlpha.toFixed(2);
+  });
+})();
+
+
+
 
 //---------------------------------------------------------------------------------------
 // I N T E R V A L

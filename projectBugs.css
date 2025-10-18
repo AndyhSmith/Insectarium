@@ -22,24 +22,22 @@
 
 }
 
-/* #background {
-	position: fixed;
-	top: 0px;
-	left: 0px;
-	width: 100%;
-	height: 100%;
-	background-color: green;
-	image-rendering: pixelated;
-	background-image: url("sandy_tile.png");
-	background-size: 128px 128px;
-	
+/* 
+#background {
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(1200px 800px at 50% 40%, #80da98 0%, #8db58b 55%, #4bec9c 100%);
+    z-index: -1;
 } */
 
 #myCanvas {
 	position: fixed;
 	top: 0px;
 	left: 0px;
-	
+	image-rendering: pixelated;     /* modern */
+  	image-rendering: crisp-edges;   /* fallback */
+	cursor: crosshair;
 }
 
 
@@ -174,4 +172,86 @@ button {
 
 button:hover {
     width: 100px;
+}
+
+
+
+
+/* subtle glassy buttons with colored glow on hover (keeps your sizes/positions) */
+button {
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(4px);
+    border-top-right-radius: 8px;
+	border-bottom-right-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,.2);
+}
+#user-action-1:hover { box-shadow: 0 0 12px rgba(255, 0, 0, .6); }
+#user-action-2:hover { box-shadow: 0 0 12px rgba(255,165, 0, .6); }
+#user-action-3:hover { box-shadow: 0 0 12px rgba(  0,255, 0, .6); }
+#user-action-4:hover { box-shadow: 0 0 12px rgba(  0,  0,255, .6); }
+
+
+
+#settings-panel {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  width: 220px;
+  padding: 10px 12px;
+  border: 1px solid rgba(255,255,255,.25);
+  border-right-width: 3px;
+  border-radius: 10px;
+  background: rgba(20, 24, 36, 0.9);
+  color: #e9edf5;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 8px 18px rgba(0,0,0,.35);
+  z-index: 10;
+}
+
+#settings-panel .settings-row {
+  display: grid;
+  grid-template-columns: 80px 1fr 48px;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+#trail-slider { width: 100%; }
+
+#settings-close {
+  width: 100%;
+  height: 32px;
+  border: 1px solid #7b87a6;
+  /* border-right-width: 6px; */
+  background: #fff;
+  color: #111;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* keep your left-side button’s hover colors; add a subtle active state */
+#user-action-5:hover { border-color: purple; }
+
+
+/* inside settings panel */
+#sprite-credit {
+  margin-top: 6px;
+  font-size: 12px;
+  font-family: monospace;
+  color: white;
+  text-align: left;
+  opacity: 0.85;
+}
+
+#sprite-credit a {
+  color: white;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+#sprite-credit a:hover {
+  color: #80c0ff;
+  text-shadow: 0 0 6px rgba(128,192,255,0.6);
+  opacity: 1;
 }

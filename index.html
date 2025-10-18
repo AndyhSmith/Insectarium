@@ -6,7 +6,7 @@
         <meta name="keywords" content="JavaScript, HTML5, game, bugs, experiment" />
         <meta name="author" content="Andy Smith" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-        <title>Project Bugs | Experiment</title>
+        <title>Insectarium</title>
         <link rel="stylesheet" href="projectBugs.css" />
         <link rel="stylesheet" href="../../css/clearButton.css" />
         <link rel="stylesheet" href="../../css/noStyleLink.css" />
@@ -18,23 +18,43 @@
 
         <button id="user-action-1" onclick="toggleBugs()">
             ADD <br />
-            BUGS
+            <u>B</u>UGS
         </button>
         <button id="user-action-2" onclick="toggleZones()">
             ADD <br />
-            ZONES
+            <u>Z</u>ONES
         </button>
-        <button id="user-action-3" onclick="clearBugs()">REMOVE BUGS</button>
-        <button id="user-action-4" onclick="clearZones()">REMOVE ZONES</button>
+        <button id="user-action-3" onclick="clearBugs()"><u>R</u>EMOVE BUGS</button>
+        <button id="user-action-4" onclick="clearZones()"><u>C</u>LEAR ZONES</button>
+        <button id="user-action-5" onclick="toggleSettings()">
+        <u>S</u>ETTINGS
+        </button>
+
+        <div id="settings-panel" hidden>
+            <div class="settings-row">
+            <label for="trail-slider">Trail Fade:</label>
+            <input id="trail-slider" type="range" min="0" max="1" step="0.01" value="0.8" />
+            <span id="trail-value">0.80</span>
+            </div>
+
+            <div id="sprite-credit">
+            Spritesheet source:
+            <a
+                href="https://didier-capdevielle.itch.io/free-2d-topview-bugs-sprites-sheet/devlog/70463/little-free-2d-topview-bugs-sprites-sheet-from-little-alchemist-lab"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                Link
+            </a>
+        </div>
+        <br>
+        <button id="settings-close" type="button" onclick="closeSettings()">Close</button>
+        </div>
         <!-- <button id="user-action-5" onclick="clearSelected()">REMOVE SELECT</button> -->
         <!-- <a href="https://www.andyhsmith.com"><button id="back-action">◄</button></a> -->
 
         <script src="./projectBugs.js"></script>
 
-        <a
-            style="position: fixed; bottom: 0px"
-            href="https://didier-capdevielle.itch.io/free-2d-topview-bugs-sprites-sheet/devlog/70463/little-free-2d-topview-bugs-sprites-sheet-from-little-alchemist-lab"
-            >Link to Sprite Sheet</a
-        >
+        
     </body>
 </html>
